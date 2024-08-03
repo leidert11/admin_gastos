@@ -10,16 +10,19 @@ const error = ref('');
 const emit = defineEmits(['definir-presupuesto']);
 
 const definirPresupuesto = () => {
-  if (presupuesto.value <= 0) { 
-    error.value = 'El presupuesto no es valido';
+  // Verificar si el campo está vacío o el valor es menor o igual a 0
+  if (presupuesto.value === '' || Number(presupuesto.value) <= 0) {
+    error.value = 'El presupuesto no es válido';
 
-        setTimeout(() => {
-          error.value = '';
-        }, 3000);
-    }
+    setTimeout(() => {
+      error.value = '';
+    }, 3000);
 
-    emit('definir-presupuesto', presupuesto.value);
-}
+    return;
+  }
+
+  emit('definir-presupuesto', Number(presupuesto.value));
+};
 
 const validarPresupuesto = (event) => {
   const value = event.target.value;
